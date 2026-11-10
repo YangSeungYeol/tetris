@@ -1,0 +1,5 @@
+node_modules/
+npm-debug.log*
+
+# Local conversation history
+WORKFLOW.md
