@@ -5,10 +5,15 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node --test tests/bgm.test.mjs tests/tetris.test.mjs tests/input.test.mjs"
+    "test": "node --test tests/bgm.test.mjs tests/tetris.test.mjs tests/input.test.mjs",
+    "test:jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:jest:watch": "npm run test:jest -- --watch",
+    "test:jest:coverage": "npm run test:jest -- --coverage",
+    "test:all": "npm test && npm run test:jest"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "jest": "^30.5.2"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

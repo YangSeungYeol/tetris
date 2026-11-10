@@ -75,7 +75,7 @@ function App() {
   const canvasRef = useRef(null);
   const clockRef = useRef({ last: performance.now(), elapsed: 0 });
   const phaseRef = useRef("idle");
-  const [view, setView] = useState({ state: "idle", score: 0, lines: 0 });
+  const [view, setView] = useState({ state: "idle", score: 0, lines: 0, level: 1 });
   const [boardError, setBoardError] = useState(null);
   const [audio, setAudio] = useState({ enabled: true, volume: 25, running: false, error: null });
   const musicRef = useRef(null);
@@ -100,7 +100,7 @@ function App() {
         musicRef.current.pause();
       }
     }
-    setView({ state: game.state, score: game.score, lines: game.lines });
+    setView({ state: game.state, score: game.score, lines: game.lines, level: game.level });
     drawBoard(canvasRef.current, game);
   }, []);
 
@@ -165,10 +165,11 @@ function App() {
       const elapsed = Math.max(0, time - clock.last);
       clock.last = time;
       if (gameRef.current.state === "playing") {
-        clock.elapsed += Math.min(elapsed, DROP_INTERVAL);
-        if (clock.elapsed >= DROP_INTERVAL) {
+        const interval = gameRef.current.dropInterval;
+        clock.elapsed += Math.min(elapsed, interval);
+        if (clock.elapsed >= interval) {
           gameRef.current.step();
-          clock.elapsed %= DROP_INTERVAL;
+          clock.elapsed %= interval;
           publish();
         }
       }
@@ -235,13 +236,14 @@ function App() {
     onClick: event => { if (event.detail === 0) perform(action); },
   });
 
-  const scorePanel = <Stack direction="row" spacing={1}>
+  const scorePanel = <Grid container spacing={1}>
     <Typography id="score" component="output" aria-label="현재 점수" variant={compact ? "h5" : "h4"} color="primary">
       {String(view.score).padStart(6, "0")}
     </Typography>
     <Chip id="status" role="status" label={STATES[view.state]} color={view.state === "playing" ? "success" : "default"} size="small" />
     <Chip label={<><span id="lines">{view.lines}</span>줄</>} variant="outlined" size="small" />
-  </Stack>;
+    <Chip label={<><span id="level">{view.level}</span>레벨</>} aria-label={`현재 레벨 ${view.level}`} variant="outlined" size="small" />
+  </Grid>;
 
   const actionButtons = <Stack direction="row" spacing={1}>
     <Button id="primary-button" variant="contained" disabled={Boolean(boardError)} fullWidth

@@ -3,6 +3,9 @@
 const COLS = 10;
 const ROWS = 20;
 const DROP_INTERVAL = 700;
+const LINES_PER_LEVEL = 10;
+const SPEED_STEP = 60;
+const MIN_DROP_INTERVAL = 100;
 const LINE_SCORES = [0, 100, 300, 500, 800];
 const SHAPES = [
   [[1, 1, 1, 1]],
@@ -25,6 +28,14 @@ class TetrisGame {
     this.score = 0;
     this.lines = 0;
     this.state = "idle";
+  }
+
+  get level() {
+    return Math.floor(this.lines / LINES_PER_LEVEL) + 1;
+  }
+
+  get dropInterval() {
+    return Math.max(MIN_DROP_INTERVAL, DROP_INTERVAL - (this.level - 1) * SPEED_STEP);
   }
 
   start() {

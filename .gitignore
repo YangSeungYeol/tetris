@@ -3,3 +3,5 @@ npm-debug.log*
 
 # Local conversation history
 WORKFLOW.md
+
+coverage/

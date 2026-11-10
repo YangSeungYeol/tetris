@@ -39,7 +39,7 @@ function Landing() {
             <Stack spacing={3}>
               <Typography variant="h5" component="h2">쌓고, 채우고, 비우는 재미</Typography>
               <Typography color="text.secondary">
-                내려오는 블록을 움직여 가로줄을 빈틈없이 채워보세요. 완성된 줄은 사라지고 점수가 올라갑니다.
+                내려오는 블록을 움직여 가로줄을 빈틈없이 채워보세요. 완성된 줄은 사라지고 점수가 올라갑니다. 10줄마다 레벨이 오르고 블록이 더 빨리 내려옵니다.
                 컴퓨터에서는 키보드로, 휴대폰에서는 화면 버튼으로 바로 즐길 수 있어요.
               </Typography>
               <Grid container spacing={1}>
